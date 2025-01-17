@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ShimmerIssue.ViewModels"
+             xmlns:models="clr-namespace:ShimmerIssue.Models"
+             xmlns:local="clr-namespace:ShimmerIssue"
+             xmlns:PullToRefreshControl="clr-namespace:Syncfusion.Maui.Toolkit.PullToRefresh;assembly=Syncfusion.Maui.Toolkit"
+             x:Class="ShimmerIssue.MainPage"
+             x:DataType="viewModels:MainViewModel">
+
+    <PullToRefreshControl:SfPullToRefresh IsRefreshing="{Binding IsBusy}" RefreshCommand="{Binding RefreshCommand}">
+        <PullToRefreshControl:SfPullToRefresh.PullableContent>
+            <CollectionView ItemsSource="{Binding Students}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:StudentModel">
+                        <local:StudentTemplate />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </PullToRefreshControl:SfPullToRefresh.PullableContent>
+    </PullToRefreshControl:SfPullToRefresh>
+</ContentPage>
