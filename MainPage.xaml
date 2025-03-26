@@ -1,22 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModels="clr-namespace:ShimmerIssue.ViewModels"
-             xmlns:models="clr-namespace:ShimmerIssue.Models"
              xmlns:local="clr-namespace:ShimmerIssue"
-             xmlns:PullToRefreshControl="clr-namespace:Syncfusion.Maui.Toolkit.PullToRefresh;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:pulltoRefresh="clr-namespace:Syncfusion.Maui.Toolkit.PullToRefresh;assembly=Syncfusion.Maui.Toolkit"
+             xmlns:shimmer="clr-namespace:Syncfusion.Maui.Toolkit.Shimmer;assembly=Syncfusion.Maui.Toolkit"
              x:Class="ShimmerIssue.MainPage"
-             x:DataType="viewModels:MainViewModel">
+             x:DataType="local:MainViewModel">
+    <Grid RowDefinitions="Auto, *" RowSpacing="10">
 
-    <PullToRefreshControl:SfPullToRefresh IsRefreshing="{Binding IsBusy}" RefreshCommand="{Binding RefreshCommand}">
-        <PullToRefreshControl:SfPullToRefresh.PullableContent>
-            <CollectionView ItemsSource="{Binding Students}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:StudentModel">
-                        <local:StudentTemplate />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </PullToRefreshControl:SfPullToRefresh.PullableContent>
-    </PullToRefreshControl:SfPullToRefresh>
+        <Button Grid.Row="0"
+                Text="Go To Details"
+                Command="{Binding OpenDetailsCommand}" />
+
+        <pulltoRefresh:SfPullToRefresh Grid.Row="1"
+                                       RefreshViewHeight="50"
+                                       RefreshViewThreshold="30"
+                                       PullingThreshold="150"
+                                       RefreshViewWidth="50"
+                                       TransitionMode="SlideOnTop"
+                                       IsRefreshing="{Binding IsRefreshing}"
+                                       RefreshCommand="{Binding RefreshDataCommand}">
+            <pulltoRefresh:SfPullToRefresh.PullableContent>
+                <CollectionView ItemsSource="{Binding Students}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="local:StudentModel">
+                            <shimmer:SfShimmer Background="Transparent"
+                                               Fill="red"
+                                               WaveColor="CornflowerBlue"
+                                               WaveWidth="250"
+                                               AnimationDuration="700"
+                                               IsActive="{Binding IsBusy, Source={RelativeSource AncestorType={x:Type local:MainViewModel}}}">
+                                <shimmer:SfShimmer.CustomView>
+                                    <Grid ColumnDefinitions="*"
+                                          RowDefinitions="Auto, Auto, Auto"
+                                          RowSpacing="10"
+                                          Padding="20">
+                                        <!--  Title  -->
+                                        <shimmer:ShimmerView Grid.Row="0"
+                                                             HeightRequest="15"
+                                                             ShapeType="RoundedRectangle" />
+
+                                        <!--  Program Name  -->
+                                        <shimmer:ShimmerView Grid.Row="1"
+                                                             HeightRequest="15"
+                                                             ShapeType="RoundedRectangle" />
+
+                                        <!--  Status Tag  -->
+                                        <shimmer:ShimmerView Grid.Row="2"
+                                                             HorizontalOptions="Start"
+                                                             HeightRequest="35"
+                                                             WidthRequest="200"
+                                                             ShapeType="RoundedRectangle" />
+                                    </Grid>
+                                </shimmer:SfShimmer.CustomView>
+
+                                <shimmer:SfShimmer.Content>
+                                    <Grid ColumnDefinitions="*"
+                                          RowDefinitions="Auto, Auto, Auto"
+                                          RowSpacing="10"
+                                          Padding="20">
+                                        <!--  Title  -->
+                                        <Label Grid.Row="0"
+                                               Text="{Binding FirstName}"
+                                               MaxLines="1"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center" />
+
+                                        <!--  Last Name  -->
+                                        <Label Grid.Row="1"
+                                               Text="{Binding LastName}"
+                                               MaxLines="1"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center" />
+
+                                        <!--  Email  -->
+                                        <Label Grid.Row="2"
+                                               Text="{Binding Email}"
+                                               MaxLines="1"
+                                               HorizontalOptions="Start"
+                                               VerticalOptions="Center" />
+                                    </Grid>
+                                </shimmer:SfShimmer.Content>
+                            </shimmer:SfShimmer>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </pulltoRefresh:SfPullToRefresh.PullableContent>
+        </pulltoRefresh:SfPullToRefresh>
+    </Grid>
 </ContentPage>

@@ -1,6 +1,4 @@
-﻿using ShimmerIssue.ViewModels;
-
-namespace ShimmerIssue;
+﻿namespace ShimmerIssue;
 
 public partial class MainPage : ContentPage
 {

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using ShimmerIssue.ViewModels;
 using Syncfusion.Maui.Toolkit.Hosting;
 
 namespace ShimmerIssue
@@ -24,6 +23,9 @@ namespace ShimmerIssue
 
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
+
+            builder.Services.AddSingleton<DetailsPage>();
+            builder.Services.AddSingleton<DetailsViewModel>();
             return builder.Build();
         }
     }
